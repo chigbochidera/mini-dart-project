@@ -33,28 +33,49 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
       'Power'
     ],
     'Distance/Speed': ['Average Speed', 'Distance Travelled', 'Time of Travel'],
+    'Newtons Second Law': [
+      'Force',
+      'Momentum',
+      'Impulse',
+      'Centripetal Force',
+      'Gravitational Force'
+    ],
   };
 
   // Number of input fields for each calculation
   final Map<String, int> inputCount = {
     'Kinetic Energy': 2,
-    'Potential Energy': 3, // Updated to 3 inputs
+    'Potential Energy': 2,
     'Work Done': 2,
     'Power': 2,
     'Average Speed': 2,
     'Distance Travelled': 2,
     'Time of Travel': 2,
+    'Force': 2,
+    'Momentum': 2,
+    'Impulse': 2,
+    'Centripetal Force': 3,
+    'Gravitational Force': 3
   };
 
   // Labels for input fields based on the calculation
   final Map<String, List<String>> inputLabels = {
     'Kinetic Energy': ['Mass (kg)', 'Velocity (m/s)'],
-    'Potential Energy': ['Mass (kg)', 'Height (m)', 'Gravity (m/s²)'],
+    'Potential Energy': ['Mass (kg)', 'Height (m)'],
     'Work Done': ['Force (N)', 'Distance (m)'],
     'Power': ['Work Done (J)', 'Time (s)'],
     'Average Speed': ['Distance (m)', 'Time (s)'],
     'Distance Travelled': ['Speed (m/s)', 'Time (s)'],
     'Time of Travel': ['Distance (m)', 'Speed (m/s)'],
+    'Force': ['Mass(kg)', 'Acceleration(m/s²)'],
+    'Momentum': ['Mass(kg)', 'Velocity(m/s)'],
+    'Impulse': ['Force(N)', 'Time(s)'],
+    'Centripetal Force': ['Mass(kg)', 'Velocity(m/s)', 'Radius(m)'],
+    'Gravitational Force': [
+      'Mass1(m1)',
+      'Mass2(m2)',
+      'Distance Between Centre of masses(r)'
+    ]
   };
 
   List<TextEditingController> controllers = [
@@ -76,7 +97,7 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
             'Kinetic Energy: ${(0.5 * value1 * value2 * value2).toStringAsFixed(2)} J';
       } else if (selectedCalculation == 'Potential Energy') {
         result =
-            'Potential Energy: ${(value1 * value2 * value3).toStringAsFixed(2)} J';
+            'Potential Energy: ${(value1 * value2 * 9.8).toStringAsFixed(2)} J';
       } else if (selectedCalculation == 'Work Done') {
         result = 'Work Done: ${(value1 * value2).toStringAsFixed(2)} J';
       } else if (selectedCalculation == 'Power') {
@@ -88,6 +109,18 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
             'Distance Travelled: ${(value1 * value2).toStringAsFixed(2)} m';
       } else if (selectedCalculation == 'Time of Travel') {
         result = 'Time of Travel: ${(value1 / value2).toStringAsFixed(2)} s';
+      } else if (selectedCalculation == 'Force') {
+        result = 'Force: ${(value1 * value2).toStringAsFixed(2)} N';
+      } else if (selectedCalculation == 'Momentum') {
+        result = 'Momentum: ${(value1 * value2).toStringAsFixed(2)} kgm/s';
+      } else if (selectedCalculation == 'Impulse') {
+        result = 'Impulse: ${(value1 * value2).toStringAsFixed(2)} Ns';
+      } else if (selectedCalculation == 'Centripetal Force') {
+        result =
+            'Centripetal Force: ${((value1 * (value2 * value2)) / (value3)).toStringAsFixed(2)} N';
+      } else if (selectedCalculation == 'Gravitational Force') {
+        result =
+            'Gravitational Force: ${(9.8 * ((value1 * value2) / (value3 * value3))).toStringAsFixed(2)} (kgm/s²';
       } else {
         result = 'Invalid Calculation';
       }
@@ -161,6 +194,18 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
                         },
                       ),
                       Text('Distance/Speed'),
+                      Radio(
+                        value: 'Newtons Second Law',
+                        groupValue: calculationType,
+                        onChanged: (value) {
+                          setState(() {
+                            calculationType = value!;
+                            selectedCalculation = options[calculationType]![0];
+                            updateInputFields();
+                          });
+                        },
+                      ),
+                      Text("Newton's Law"),
                     ],
                   ),
                   DropdownButton<String>(
