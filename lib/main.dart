@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(PhysicsCalculatorApp());
@@ -152,7 +153,7 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
             child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
+                color: Color.fromARGB(255, 218, 254, 254).withOpacity(0.8),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
@@ -228,13 +229,17 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
                   ...List.generate(controllers.length, (index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: TextField(
-                        controller: controllers[index],
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: inputLabels[selectedCalculation]?[index] ??
-                              'Value ${index + 1}',
-                          border: OutlineInputBorder(),
+                      child: SizedBox(
+                        width: 300,
+                        child: TextField(
+                          controller: controllers[index],
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: inputLabels[selectedCalculation]
+                                    ?[index] ??
+                                'Value ${index + 1}',
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                     );
@@ -247,7 +252,7 @@ class _PhysicsCalculatorHomeState extends State<PhysicsCalculatorHome> {
                   SizedBox(height: 20),
                   Text(
                     result,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 50),
                     textAlign: TextAlign.center,
                   ),
                 ],
